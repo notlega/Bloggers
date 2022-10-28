@@ -11,6 +11,7 @@
     "format": "prettier --write \"**/*.{js,jsx,json,md}\""
   },
   "dependencies": {
+    "@govtechsg/sgds-react": "^2.0.0",
     "@supabase/supabase-js": "^2.0.4",
     "daisyui": "^2.33.0",
     "luxon": "^3.0.4",
