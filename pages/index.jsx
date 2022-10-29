@@ -1,12 +1,17 @@
 import Head from 'next/head';
+import Navbar from '../components/navbar.jsx';
 
 const Home = () => {
   return (
-    <div>
+    <>
       <Head>
         <title>NextJS-Blog</title>
       </Head>
-    </div>
+
+			<main>
+				<Navbar />
+			</main>
+    </>
   );
 };
 
