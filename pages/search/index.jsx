@@ -1,7 +1,7 @@
 import Head from 'next/head';
-import Navbar from '../components/navbar.jsx';
+import Navbar from '../../components/navbar.jsx';
 
-const Home = () => {
+const Search = () => {
   return (
     <>
       <Head>
@@ -13,8 +13,9 @@ const Home = () => {
         <div className="hero min-h-screen bg-base-200">
           <div className="hero-content text-center">
             <div className="max-w-md">
-              <h1 className="text-5xl font-bold">Hello</h1>
-              <p className="py-6">Welcome to a blog page</p>
+              <h1 className="text-5xl font-bold">Search</h1>
+              <div className="divider"></div>
+              <p className="py-6">No value entered!</p>
             </div>
           </div>
         </div>
@@ -23,4 +24,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Search;
