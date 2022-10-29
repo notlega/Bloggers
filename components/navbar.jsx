@@ -5,8 +5,10 @@ const Navbar = () => {
 
   const formHandler = () => {
     if (searchValue) {
-      setSearchValue("");
+      window.location.href = `/search/${searchValue}`;
     }
+
+    setSearchValue("");
   };
 
   return (
@@ -15,7 +17,7 @@ const Navbar = () => {
         <button className="btn btn-ghost normal-case text-xl">The EDGE</button>
       </div>
       <div className="flex-none gap-4">
-        <form className="form-control">
+        <div className="form-control">
           <div className="input-group">
             <input
               type="text"
@@ -41,7 +43,7 @@ const Navbar = () => {
               </svg>
             </button>
           </div>
-        </form>
+        </div>
       </div>
       <div className="dropdown dropdown-end">
         <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
