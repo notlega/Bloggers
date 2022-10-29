@@ -1,20 +1,30 @@
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 const Navbar = () => {
-  const [searchValue, setSearchValue] = React.useState("");
+  const [searchValue, setSearchValue] = React.useState('');
 
   const formHandler = () => {
     if (searchValue) {
       window.location.href = `/search/${searchValue}`;
     }
 
-    setSearchValue("");
+    setSearchValue('');
   };
+
+  const keyDownHandler = (e) => {
+    if (e.key === "Enter") {
+      formHandler();
+    }
+  }
 
   return (
     <nav className="navbar bg-base-100">
       <div className="flex-1">
-        <button className="btn btn-ghost normal-case text-xl">The EDGE</button>
+        <Link className="btn btn-ghost normal-case text-xl" href="/">
+          The EDGE
+        </Link>
       </div>
       <div className="flex-none gap-4">
         <div className="form-control">
@@ -24,6 +34,7 @@ const Navbar = () => {
               placeholder="Search blogs"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
+              onKeyDown={keyDownHandler}
               className="input input-bordered"
             />
             <button className="btn btn-square" onClick={formHandler}>
@@ -56,10 +67,10 @@ const Navbar = () => {
           className="mt-3 p-2 shadow-lg menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
         >
           <li>
-            <a>Profile</a>
+            <Link href="/profile">Profile</Link>
           </li>
           <li>
-            <a>Logout</a>
+            <Link href="/logout">Logout</Link>
           </li>
         </ul>
       </div>
