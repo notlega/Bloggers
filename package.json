@@ -11,6 +11,9 @@
     "format": "prettier --write \"**/*.{js,jsx,json,md}\""
   },
   "dependencies": {
+    "@supabase/auth-helpers-nextjs": "^0.4.2",
+    "@supabase/auth-helpers-react": "^0.3.1",
+    "@supabase/auth-ui-react": "^0.2.3",
     "@supabase/supabase-js": "^2.0.4",
     "autoprefixer": "^10.4.13",
     "daisyui": "^2.33.0",
