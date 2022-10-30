@@ -1,8 +1,10 @@
 import '../styles/globals.css';
-import {useRouter} from "next/router";
 import {createBrowserSupabaseClient} from '@supabase/auth-helpers-nextjs'
+import {SessionContextProvider} from '@supabase/auth-helpers-react'
 import {useState} from "react";
-import {SessionContextProvider} from "@supabase/auth-helpers-react/src/components/SessionContext";
+import {useRouter} from "next/router";
+import Navbar from "../components/navbar";
+
 
 function MyApp({Component, pageProps}) {
   const router = useRouter()
@@ -15,7 +17,8 @@ function MyApp({Component, pageProps}) {
       supabaseClient={supabaseClient}
       initialSession={pageProps.initialSession}
     >
-      <div className={styles.container}>
+      <Navbar theme={theme} setTheme={setTheme}/>
+      <div>
         <Component {...pageProps} />
       </div>
     </SessionContextProvider>
