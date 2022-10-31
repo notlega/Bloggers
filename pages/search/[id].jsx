@@ -2,10 +2,9 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React from 'react';
 import BlogCard from '../../components/blogCard';
-import Navbar from '../../components/navbar';
 
 const SearchParam = () => {
-  const { param } = useRouter().query;
+  const { id } = useRouter().query;
 
   return (
     <>
@@ -14,7 +13,6 @@ const SearchParam = () => {
       </Head>
 
       <main>
-        <Navbar />
         <div className="hero min-h-screen bg-base-200">
           <div className="hero-content text-center">
             <div>

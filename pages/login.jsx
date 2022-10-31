@@ -1,11 +1,11 @@
-import Login from "../components/authentication/login";
+import Login from '../components/authentication/login';
 
 const Page = () => {
   return (
-    <div style={{marginTop: "10%", marginLeft: "15%", marginRight: "15%"}}>
+    <div className="max-w-md mt-4 mx-auto">
       Login Here
-      <Login/>
+      <Login />
     </div>
   );
-}
+};
 export default Page;
