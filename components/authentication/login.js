@@ -2,25 +2,13 @@ import { Auth, ThemeSupa } from '@supabase/auth-ui-react';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 
 const providers = [
-  'apple',
-  'azure',
-  'bitbucket',
-  'discord',
-  'facebook',
-  'github',
-  'gitlab',
   'google',
-  'keycloak',
-  'linkedin',
-  'messagebird',
-  'notion',
-  'slack',
-  'spotify',
-  'twitter',
-  'twitch',
-  'zoom',
-  'twilio',
-  'vonage',
+  'google',
+  'google',
+  'google',
+  'google',
+  'google',
+  'google',
 ];
 
 const Login = () => {
