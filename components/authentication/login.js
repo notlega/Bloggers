@@ -26,7 +26,6 @@ const providers = [
 const Login = () => {
   const supabaseClient = useSupabaseClient();
   return (
-    // <div style={{marginRight: 240, marginLeft: 240, marginTop: 60}}>
     <Auth
       redirectTo="http://localhost:3000/"
       appearance={{ theme: ThemeSupa }}
@@ -34,7 +33,6 @@ const Login = () => {
       providers={providers}
       socialLayout="horizontal"
     />
-    // </div>
   );
 };
 
