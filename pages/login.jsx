@@ -1,17 +1,18 @@
-import Login from '../components/authentication/login';
+import LoginComponent from '../components/authentication/login';
 
-const Page = () => {
+const Login = () => {
   return (
     <main>
-      <div className="hero min-h-screen bg-base-200">
+      <div className="hero min-h-screen">
         <div className="hero-content text-center">
-          <div className="max-w-md space-y-8">
+          <div className="max-w-2xl space-y-8">
             <h1 className="text-5xl font-bold">Login Here</h1>
-            <Login />
+            <LoginComponent />
           </div>
         </div>
       </div>
     </main>
   );
 };
-export default Page;
+
+export default Login;

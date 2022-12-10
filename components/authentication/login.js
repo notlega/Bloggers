@@ -1,15 +1,7 @@
 import { Auth, ThemeSupa } from '@supabase/auth-ui-react';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 
-const providers = [
-  'google',
-  'google',
-  'google',
-  'google',
-  'google',
-  'google',
-  'google',
-];
+const providers = ['google', 'google', 'google', 'google', 'google', 'google', 'google'];
 
 const Login = () => {
   const supabaseClient = useSupabaseClient();

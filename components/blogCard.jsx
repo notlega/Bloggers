@@ -1,5 +1,3 @@
-import Head from 'next/head';
-
 const BlogCard = ({ id, title, desc }) => {
   return (
     <div className="card w-96 bg-base-100 shadow-xl">
