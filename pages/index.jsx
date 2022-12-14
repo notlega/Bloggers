@@ -1,14 +1,11 @@
-import React from 'react';
+import { useState } from 'react';
+import BlogCard from '../components/BlogCard';
 
 const Home = () => {
   return (
-    <div className="hero min-h-screen">
-      <div className="hero-content text-center">
-        <div className="max-w-md">
-          <h1 className="text-5xl font-bold">Hello</h1>
-          <p className="py-6">Welcome to a blog page</p>
-        </div>
-      </div>
+    <div className="flex flex-col justify-center items-center">
+      <BlogCard subHeader="Bing Chilling Section" title='bing chilling was first said by john cena back in 2019' />
+      <BlogCard title='bing chilling was first said by john cena back in 2019' />
     </div>
   );
 };
