@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
-import { useUser } from '@supabase/auth-helpers-react';
-import { useSupabaseClient } from '@supabase/auth-helpers-react';
+import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react';
 import debounce from '../utils/debounce';
 
 const Navbar = () => {
@@ -10,11 +9,11 @@ const Navbar = () => {
   const [searchValue, setSearchValue] = useState('');
 
   const logOut = () => {
-    const {error} = supabaseClient.auth.signOut();
+    const { error } = supabaseClient.auth.signOut();
 
-		if (error) {
-			console.log(error);
-		}
+    if (error) {
+      console.log(error);
+    }
   };
 
   const updateSearchValue = debounce((value) => {
@@ -97,7 +96,7 @@ const Navbar = () => {
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
-              <img src="https://placeimg.com/80/80/people" />
+              <img src="https://placeimg.com/80/80/people" alt='temp_image' />
             </div>
           </label>
           <ul

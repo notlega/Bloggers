@@ -14,7 +14,7 @@ const Home = () => {
     status: blogsStatus,
   } = useQuery(
     'get_blogs',
-    () => supabaseClient.rpc('get_blogs', { blogs_limit: 10, blogs_offset }),
+    () => supabaseClient.rpc('get_blogs', { blogs_limit: 10, blogs_offset: 10 }),
     {
       refetchOnMount: false,
       refetchOnWindowFocus: false,

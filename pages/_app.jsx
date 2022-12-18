@@ -7,7 +7,7 @@ import Layout from '../components/Layout';
 import '../styles/globals.css';
 import 'react-loading-skeleton/dist/skeleton.css';
 
-function MyApp({ Component, pageProps }) {
+const MyApp = ({ Component, pageProps }) => {
   // Create a new supabase browser client on every first render.
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
   const [queryClient] = useState(() => new QueryClient());
@@ -24,10 +24,11 @@ function MyApp({ Component, pageProps }) {
       </QueryClientProvider>
     </SessionContextProvider>
   );
-}
+};
 
 MyApp.propTypes = {
   Component: PropTypes.elementType.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
   pageProps: PropTypes.object.isRequired,
 };
 
