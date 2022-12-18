@@ -32,7 +32,7 @@ module.exports = {
         ignoreRestSiblings: true,
       },
     ],
-    'jsx-a11y/label-has-associated-control': ['none', { assert: 'either' }],
+    'jsx-a11y/label-has-associated-control': ['off', { assert: 'either' }],
     'react/jsx-props-no-spreading': 'off',
     'no-plusplus': 'off',
   },
