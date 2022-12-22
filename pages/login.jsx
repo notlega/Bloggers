@@ -16,7 +16,7 @@ const Login = () => {
             appearance={{ theme: ThemeSupa }}
             supabaseClient={supabaseClient}
             socialLayout="horizontal"
-            redirectTo='http://localhost:3000'
+            redirectTo="http://localhost:3000"
           />
         </div>
       </div>
