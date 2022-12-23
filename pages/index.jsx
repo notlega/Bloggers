@@ -16,7 +16,6 @@ const Home = () => {
     'get_blogs',
     () => supabaseClient.rpc('get_blogs', { blogs_limit: null, blogs_offset: null }),
     {
-      refetchOnMount: false,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
       onSuccess: (data) => {
@@ -30,7 +29,7 @@ const Home = () => {
   }, [blogs]);
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center text-center">
       {blogsError && <p>There was an error fetching blogs</p>}
 
       {!blogsError &&
