@@ -24,6 +24,7 @@ const Home = () => {
     }
   );
 
+  // TODO: remove useEffect after testing
   useEffect(() => {
     console.log(blogs);
   }, [blogs]);
@@ -32,11 +33,13 @@ const Home = () => {
     <div className="flex flex-col justify-center text-center">
       {blogsError && <p>There was an error fetching blogs</p>}
 
+      {blogs.length === 0 && <p>No blogs?</p>}
+
       {!blogsError &&
         !blogsLoading &&
         blogsStatus === 'success' &&
         blogs &&
-        blogs.map((blog) => <BlogCard id={blog.blog_id} title={blog.name} />)}
+        blogs.map((blog) => <BlogCard id={blog.id} title={blog.name} />)}
     </div>
   );
 };
