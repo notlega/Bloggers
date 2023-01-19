@@ -1,12 +1,23 @@
 import Link from 'next/link';
-import { useState } from 'react';
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react';
-import debounce from '../utils/debounce';
+import PropTypes from 'prop-types';
+import { IoSearch } from 'react-icons/io5';
+import { MdLogin, MdLogout } from 'react-icons/md';
+import { RxHamburgerMenu } from 'react-icons/rx';
+import Container from './Container';
 
-const Navbar = () => {
+const propTypes = {
+  children: PropTypes.node,
+};
+
+/**
+ * Navbar is a component that displays the navbar at the top of the page
+ *
+ * @type {React.FC<import('prop-types').InferProps<typeof propTypes>>}
+ */
+const Navbar = ({ children }) => {
   const user = useUser();
   const supabaseClient = useSupabaseClient();
-  const [searchValue, setSearchValue] = useState('');
 
   const logOut = () => {
     const { error } = supabaseClient.auth.signOut();
@@ -16,110 +27,89 @@ const Navbar = () => {
     }
   };
 
-  const updateSearchValue = debounce((value) => {
-    setSearchValue(value);
-  }, 1000);
-
-  const formHandler = () => {
-    if (searchValue) {
-      window.location.href = `/search/${searchValue}`;
-    }
-
-    setSearchValue('');
-  };
-
-  const keyDownHandler = (event) => {
-    if (event.key === 'Enter') {
-      formHandler();
-    }
-  };
-
   return (
-    <nav className="navbar bg-base-100 space-x-2">
-      <div className="flex-1">
-        <Link className="btn btn-ghost normal-case text-xl" href="/">
-          Bloggers!
-        </Link>
-      </div>
-      <div className="flex-none gap-4">
-        <label htmlFor="search-modal" className="btn btn-ghost rounded-full">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-3/4 w-3/4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
-        </label>
-
-        <input type="checkbox" id="search-modal" className="modal-toggle" />
-        <label htmlFor="search-modal" className="modal">
-          <label className="modal-box relative" htmlFor="">
-            <div className="form-control">
-              <div className="input-group justify-center">
-                <input
-                  type="text"
-                  placeholder="Search…"
-                  className="input input-bordered"
-                  onKeyDown={keyDownHandler}
-                  onChange={(event) => updateSearchValue(event.target.value)}
-                />
-                <button className="btn btn-square" onClick={formHandler}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    />
-                  </svg>
+    <div className="drawer drawer-end drawer-mobile">
+      <input type="checkbox" id="right-drawer" className="drawer-toggle" />
+      <div className="drawer-content">
+        <Container>
+          <nav className="navbar w-full sticky top-0">
+            <div className="navbar py-2.5 space-x-2">
+              <Link href="/" className="flex-1 self-center text-xl font-semibold whitespace-nowrap">
+                Bloggers!
+              </Link>
+              <div className="hidden md:block input-group w-auto">
+                <input type="text" className="input input-bordered w-64" placeholder="Search..." />
+                <button className="btn btn-square">
+                  <IoSearch className="w-fit h-fit" />
                 </button>
               </div>
+              {user ? (
+                <div className="dropdown dropdown-end">
+                  <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                    <div className="w-10 rounded-full">
+                      <img src="https://placeimg.com/80/80/people" alt="temp_image" />
+                    </div>
+                  </label>
+                  <ul
+                    tabIndex={0}
+                    className="mt-3 p-2 shadow-lg menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+                  >
+                    <li>
+                      <Link href="/profile">Profile</Link>
+                    </li>
+                    <li>
+                      <button onClick={logOut}>Logout</button>
+                    </li>
+                  </ul>
+                </div>
+              ) : (
+                <div className="flex-none hidden md:inline-flex">
+                  <Link href="/login" className="btn btn-ghost">
+                    Login&nbsp;
+                    <MdLogin />
+                  </Link>
+                </div>
+              )}
+              <label htmlFor="right-drawer" className="drawer-button btn btn-ghost md:hidden">
+                <span className="sr-only">Open menu</span>
+                <RxHamburgerMenu className="w-6 h-6" />
+              </label>
             </div>
-          </label>
-        </label>
+          </nav>
+          {children}
+        </Container>
       </div>
-      {user ? (
-        <div className="dropdown dropdown-end">
-          <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-            <div className="w-10 rounded-full">
-              <img src="https://placeimg.com/80/80/people" alt='temp_image' />
+      <div className="drawer-side md:hidden">
+        <label htmlFor="right-drawer" className="drawer-overlay" />
+        <ul className="menu p-4 w-80 bg-base-100 md:hidden">
+          <li>
+            <div className="input-group gap-0">
+              <input
+                type="text"
+                id="search-navbar"
+                className="input input-bordered"
+                placeholder="Search..."
+              />
+              <button className="btn btn-square">
+                <IoSearch className="w-fit h-fit" />
+              </button>
             </div>
-          </label>
-          <ul
-            tabIndex={0}
-            className="mt-3 p-2 shadow-lg menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
-          >
-            <li>
-              <Link href="/profile">Profile</Link>
-            </li>
-            <li>
-              <button onClick={logOut}>Logout</button>
-            </li>
-          </ul>
-        </div>
-      ) : (
-        <div className="flex-none">
-          <Link href="/login">
-            <div className="btn btn-ghost">Login</div>
-          </Link>
-        </div>
-      )}
-    </nav>
+          </li>
+          <li>
+            <Link
+              href="/login"
+              className="inline-flex flex-wrap items-center text-center text-md"
+            >
+              <MdLogin className="mt-0.5 w-fit h-5/6" />
+              Login
+            </Link>
+          </li>
+        </ul>
+      </div>
+    </div>
   );
 };
+
+Navbar.propTypes = propTypes;
 
 export default Navbar;
