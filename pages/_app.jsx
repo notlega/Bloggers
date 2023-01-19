@@ -3,9 +3,15 @@ import { SessionContextProvider } from '@supabase/auth-helpers-react';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import Layout from '../components/Layout';
 import '../styles/globals.css';
 import 'react-loading-skeleton/dist/skeleton.css';
+import Container from '../components/Container';
+import Navbar from '../components/Navbar';
+
+// this is a list of general todos for this project
+// TODO: switch to using picocss instead of tailwindcss
+// TODO: write jest tests for all components
+// TODO: install cypress and run tests on github actions
 
 const MyApp = ({ Component, pageProps }) => {
   // Create a new supabase browser client on every first render.
@@ -18,9 +24,10 @@ const MyApp = ({ Component, pageProps }) => {
       initialSession={pageProps.initialSession}
     >
       <QueryClientProvider client={queryClient}>
-        <Layout>
+        <Container>
+          <Navbar />
           <Component {...pageProps} />
-        </Layout>
+        </Container>
       </QueryClientProvider>
     </SessionContextProvider>
   );

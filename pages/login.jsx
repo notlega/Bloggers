@@ -1,11 +1,9 @@
-import { Auth, ThemeSupa } from '@supabase/auth-ui-react';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 
 const Login = () => {
   const supabaseClient = useSupabaseClient();
 
-  // TODO: add providers
-  // const providers = ['google', 'facebook'];
+  // TODO: make custom login page
 
   return (
     <div className="hero min-h-screen">

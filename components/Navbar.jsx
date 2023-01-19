@@ -38,7 +38,7 @@ const Navbar = () => {
     <nav className="navbar bg-base-100 space-x-2">
       <div className="flex-1">
         <Link className="btn btn-ghost normal-case text-xl" href="/">
-          The EDGE
+          Bloggers!
         </Link>
       </div>
       <div className="flex-none gap-4">
