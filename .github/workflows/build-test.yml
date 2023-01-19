@@ -26,7 +26,7 @@ jobs:
           envkey_NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           envkey_NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
           envkey_NEXT_PUBLIC_SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
-          directory: /
+          directory: ''
           file_name: .env.local
           fail_on_empty: true
 
