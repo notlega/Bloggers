@@ -1,0 +1,32 @@
+name: NodeJS Build Test
+
+on:
+  pull_request:
+    branches: [ "main", "develop" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout source tree
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '16.x'
+    
+    - name: Installing deps
+    - run: npm ci
+    
+    - name: Create .env.local for web
+    - uses: SpicyPizza/create-envfile@v1.3.0
+      with:
+        envkey_NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        envkey_NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        envkey_NEXT_PUBLIC_SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        directory: /
+        file_name: .env.local
+        fail_on_empty: true
+    
+    - run: npm run build
