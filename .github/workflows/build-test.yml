@@ -12,6 +12,15 @@ jobs:
       - name: Checkout source tree
         uses: actions/checkout@v3
 
+      - name: Check for cached node-modules
+        uses: actions/cache/restore@v3
+        id: cache
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-
+
       - name: Use Node.js 16.x
         uses: actions/setup-node@v3
         with:
@@ -19,7 +28,15 @@ jobs:
           cache: 'npm'
 
       - name: Installing deps
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
+
+      - name: Cache node-modules
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
 
       - name: Create .env.local for supabase
         uses: SpicyPizza/create-envfile@v1.3.0
