@@ -1,28 +1,26 @@
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { Formik } from 'formik';
 
-const Login = () => {
+const SignUp = () => {
   const supabaseClient = useSupabaseClient();
 
-  const loginHandler = async (email, password) => {
-    const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+  const signUpHandler = async (email, password) => {
+    const { error } = await supabaseClient.auth.signUp({ email, password });
 
     if (error) {
       console.log(error);
     }
   };
 
-  // TODO: write validation
-
   return (
     <div className="hero min-h-screen">
       <div className="hero-content flex-col text-center justify-center space-y-8 w-full">
-        <h1 className="text-5xl font-bold w-3/4">Login</h1>
+        <h1 className="text-5xl font-bold w-3/4">Sign Up</h1>
         <Formik
           initialValues={{ email: '', password: '' }}
           validate={() => {}}
           onSubmit={(values, { setSubmitting }) => {
-            loginHandler(values.email, values.password);
+            signUpHandler(values.email, values.password);
             setSubmitting(false);
           }}
         >
@@ -51,7 +49,7 @@ const Login = () => {
               />
               {errors.password && touched.password && errors.password}
               <button type="submit" disabled={isSubmitting} className="btn w-full">
-                Login
+                Sign Up
               </button>
             </form>
           )}
@@ -61,4 +59,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;
