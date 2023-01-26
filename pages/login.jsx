@@ -1,21 +1,30 @@
+import { useRouter } from 'next/router';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { Formik } from 'formik';
+import LoginLayout from '../layouts/LoginLayout';
+
+const getLayout = (page) => <LoginLayout>{page}</LoginLayout>;
 
 const Login = () => {
+  const router = useRouter();
   const supabaseClient = useSupabaseClient();
 
   const loginHandler = async (email, password) => {
     const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
 
     if (error) {
+      // TODO: HANDLE ERROR WHEN I NOT LAZY
+      // TODO: I AM LAZY
       console.log(error);
     }
+
+    router.push('/');
   };
 
   // TODO: write validation
 
   return (
-    <div className="hero min-h-screen">
+    <div className="hero min-h-screen flex">
       <div className="hero-content flex-col text-center justify-center space-y-8 w-full">
         <h1 className="text-5xl font-bold w-3/4">Login</h1>
         <Formik
@@ -60,5 +69,7 @@ const Login = () => {
     </div>
   );
 };
+
+Login.getLayout = getLayout;
 
 export default Login;

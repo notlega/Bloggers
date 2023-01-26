@@ -4,18 +4,18 @@ import PropTypes from 'prop-types';
 import { IoSearch } from 'react-icons/io5';
 import { MdLogin, MdLogout } from 'react-icons/md';
 import { RxHamburgerMenu } from 'react-icons/rx';
-import Container from './Container';
+import Container from '../components/Container';
 
 const propTypes = {
   children: PropTypes.node,
 };
 
 /**
- * Navbar is a component that displays the navbar at the top of the page
+ * The default layout for the app
  *
  * @type {React.FC<import('prop-types').InferProps<typeof propTypes>>}
  */
-const Navbar = ({ children }) => {
+const DefaultLayout = ({ children }) => {
   const user = useUser();
   const supabaseClient = useSupabaseClient();
 
@@ -96,10 +96,7 @@ const Navbar = ({ children }) => {
             </div>
           </li>
           <li>
-            <Link
-              href="/login"
-              className="inline-flex flex-wrap items-center text-center text-md"
-            >
+            <Link href="/login" className="inline-flex flex-wrap items-center text-center text-md">
               <MdLogin className="mt-0.5 w-fit h-5/6" />
               Login
             </Link>
@@ -110,6 +107,6 @@ const Navbar = ({ children }) => {
   );
 };
 
-Navbar.propTypes = propTypes;
+DefaultLayout.propTypes = propTypes;
 
-export default Navbar;
+export default DefaultLayout;

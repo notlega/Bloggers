@@ -5,11 +5,12 @@ const SignUp = () => {
   const supabaseClient = useSupabaseClient();
 
   const signUpHandler = async (email, password) => {
-    const { error } = await supabaseClient.auth.signUp({ email, password });
+    const { data, error } = await supabaseClient.auth.signUp({ email, password });
 
     if (error) {
       console.log(error);
     }
+		// TODO: Redirect to home page
   };
 
   return (
