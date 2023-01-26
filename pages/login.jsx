@@ -1,9 +1,8 @@
 import { useRouter } from 'next/router';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { Formik } from 'formik';
-import LoginLayout from '../layouts/LoginLayout';
 
-const getLayout = (page) => <LoginLayout>{page}</LoginLayout>;
+const getLayout = (page) => page;
 
 const Login = () => {
   const router = useRouter();

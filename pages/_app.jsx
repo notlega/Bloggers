@@ -33,7 +33,7 @@ const MyApp = ({ Component, pageProps }) => {
       initialSession={pageProps.initialSession}
     >
       <QueryClientProvider client={queryClient}>
-        <Component {...pageProps} />{' '}
+        <Component {...pageProps} />
       </QueryClientProvider>
     </SessionContextProvider>
   );

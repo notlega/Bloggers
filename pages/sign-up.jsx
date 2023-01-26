@@ -10,7 +10,7 @@ const SignUp = () => {
     if (error) {
       console.log(error);
     }
-		// TODO: Redirect to home page
+    // TODO: Redirect to home page
   };
 
   return (

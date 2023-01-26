@@ -33,7 +33,7 @@ const DefaultLayout = ({ children }) => {
       <div className="drawer-content">
         <Container>
           <nav className="navbar w-full sticky top-0">
-            <div className="navbar py-2.5 space-x-2">
+            <div className="flex-row py-2.5 space-x-2">
               <Link href="/" className="flex-1 self-center text-xl font-semibold whitespace-nowrap">
                 Bloggers!
               </Link>
