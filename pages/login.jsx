@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
+import { RxCross1 } from 'react-icons/rx';
 import { Formik } from 'formik';
+import Link from 'next/link';
 
 const getLayout = (page) => page;
 
@@ -23,8 +25,11 @@ const Login = () => {
   // TODO: write validation
 
   return (
-    <div className="hero min-h-screen flex">
+    <div className="hero min-h-screen">
       <div className="hero-content flex-col text-center justify-center space-y-8 w-full">
+        <button className="btn btn-ghost absolute top-6 left-6" onClick={() => router.back()}>
+          <RxCross1 className="w-5 h-5" />
+        </button>
         <h1 className="text-5xl font-bold w-3/4">Login</h1>
         <Formik
           initialValues={{ email: '', password: '' }}
@@ -64,6 +69,14 @@ const Login = () => {
             </form>
           )}
         </Formik>
+        <div className="flex flex-row justify-between w-3/4 md:w-1/3 !mt-0">
+          <Link href="/forgot-password" className="link">
+            Forgot Password?
+          </Link>
+          <Link href="/register" className="link">
+            Register
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -21,6 +21,7 @@ const propTypes = {
  * @type {React.FC<import('prop-types').InferProps<typeof propTypes>>}
  */
 const MyApp = ({ Component, pageProps }) => {
+  // Filter through the pages to see if they have a getLayout function
   const getLayout = Component.getLayout || ((page) => <DefaultLayout>{page}</DefaultLayout>);
 
   // Create a new supabase browser client on every first render.
