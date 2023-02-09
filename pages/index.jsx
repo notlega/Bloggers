@@ -1,47 +1,47 @@
-import { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
-import { useSupabaseClient } from '@supabase/auth-helpers-react';
+import PropTypes from 'prop-types';
+import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import BlogCard from '../components/BlogCard';
 
-const Home = () => {
-  const supabaseClient = useSupabaseClient();
+const getServerSideProps = async (context) => {
+  const supabaseClient = createServerSupabaseClient(context);
 
-  const [blogs, setBlogs] = useState([]);
+  const { data: blogs } = await supabaseClient.rpc('get_blogs', {
+    blogs_limit: null,
+    blogs_offset: null,
+  });
 
-  const {
-    isError: blogsError,
-    isLoading: blogsLoading,
-    status: blogsStatus,
-  } = useQuery(
-    'get_blogs',
-    () => supabaseClient.rpc('get_blogs', { blogs_limit: null, blogs_offset: null }),
-    {
-      refetchOnWindowFocus: false,
-      refetchOnReconnect: false,
-      onSuccess: (data) => {
-        setBlogs(data.data);
-      },
-    }
-  );
-
-  // TODO: remove useEffect after testing
-  useEffect(() => {
-    console.log(blogs);
-  }, [blogs]);
-
-  return (
-    <div className="flex flex-col justify-center text-center">
-      {blogsError && <p>There was an error fetching blogs</p>}
-
-      {blogs.length === 0 && <p>No blogs?</p>}
-
-      {!blogsError &&
-        !blogsLoading &&
-        blogsStatus === 'success' &&
-        blogs &&
-        blogs.map((blog) => <BlogCard id={blog.id} title={blog.name} />)}
-    </div>
-  );
+  return {
+    props: {
+      blogs: blogs || null,
+    },
+  };
 };
 
+const propTypes = {
+  blogs: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      description: PropTypes.string,
+      blog: PropTypes.string,
+      created_at: PropTypes.string,
+      updated_at: PropTypes.string,
+      user_id: PropTypes.string,
+      username: PropTypes.string,
+      avatar: PropTypes.string,
+    })
+  ),
+};
+
+const Home = ({ blogs }) => (
+  <div className="flex flex-col justify-center text-center">
+    {blogs === null && <p>No blogs?</p>}
+
+    {blogs && blogs.map((blog) => <BlogCard id={blog.id} title={blog.name} />)}
+  </div>
+);
+
+Home.propTypes = propTypes;
+
+export { getServerSideProps };
 export default Home;

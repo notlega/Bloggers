@@ -21,20 +21,20 @@ const propTypes = {
  * @type {React.FC<import('prop-types').InferProps<typeof propTypes>>}
  */
 const MyApp = ({ Component, pageProps }) => {
-  // Filter through the pages to see if they have a getLayout function
-  const getLayout = Component.getLayout || ((page) => <DefaultLayout>{page}</DefaultLayout>);
-
   // Create a new supabase browser client on every first render.
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
   const [queryClient] = useState(() => new QueryClient());
 
-  return getLayout(
+  // Filter through the pages to see if they have a getLayout function
+  const getLayout = Component.getLayout || ((page) => <DefaultLayout>{page}</DefaultLayout>);
+
+  return (
     <SessionContextProvider
       supabaseClient={supabaseClient}
       initialSession={pageProps.initialSession}
     >
       <QueryClientProvider client={queryClient}>
-        <Component {...pageProps} />
+        {getLayout(<Component {...pageProps} />)}
       </QueryClientProvider>
     </SessionContextProvider>
   );

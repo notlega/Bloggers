@@ -1,10 +1,32 @@
 import { useRouter } from 'next/router';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
-import { RxCross1 } from 'react-icons/rx';
+import { MdArrowBack } from 'react-icons/md';
 import { Formik } from 'formik';
 import Link from 'next/link';
+import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
+import Container from '../components/Container';
 
-const getLayout = (page) => page;
+// TODO: create auth guard when i have time
+// temp fix for auth guard
+// redirects users who are already logged in
+const getServerSideProps = async (context) => {
+  const supabaseClient = createServerSupabaseClient(context);
+
+  const user = await supabaseClient.auth.getUser();
+
+  if (user.data.user) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
 
 const Login = () => {
   const router = useRouter();
@@ -16,7 +38,8 @@ const Login = () => {
     if (error) {
       // TODO: HANDLE ERROR WHEN I NOT LAZY
       // TODO: I AM LAZY
-      console.log(error);
+      console.log('🚀 ~ file: login.jsx:17 ~ loginHandler ~ error', error);
+      return;
     }
 
     router.push('/');
@@ -27,10 +50,10 @@ const Login = () => {
   return (
     <div className="hero min-h-screen">
       <div className="hero-content flex-col text-center justify-center space-y-8 w-full">
-        <button className="btn btn-ghost absolute top-6 left-6" onClick={() => router.back()}>
-          <RxCross1 className="w-5 h-5" />
+        <button className="btn btn-ghost absolute top-6 left-4 !m-0" onClick={() => router.back()}>
+          <MdArrowBack className="w-8 h-8" />
         </button>
-        <h1 className="text-5xl font-bold w-3/4">Login</h1>
+        <h1 className="text-5xl font-bold w-full">Login</h1>
         <Formik
           initialValues={{ email: '', password: '' }}
           validate={() => {}}
@@ -41,40 +64,41 @@ const Login = () => {
         >
           {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
             <form
-              className="form-control justify-center space-y-4 w-3/4 md:w-1/3"
+              className="form-control justify-center space-y-4 w-full md:w-1/3"
               onSubmit={handleSubmit}
             >
               <input
                 type="email"
                 name="email"
                 placeholder="Email"
-                className="input input-bordered w-full"
+                className="input input-bordered"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.email}
               />
+              {errors.email && touched.email && errors.email}
               <input
                 type="password"
                 name="password"
                 placeholder="Password"
-                className="input input-bordered w-full"
+                className="input input-bordered"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.password}
               />
               {errors.password && touched.password && errors.password}
-              <button type="submit" disabled={isSubmitting} className="btn w-full">
+              <button type="submit" disabled={isSubmitting} className="btn">
                 Login
               </button>
             </form>
           )}
         </Formik>
-        <div className="flex flex-row justify-between w-3/4 md:w-1/3 !mt-0">
+        <div className="flex flex-row justify-between w-full md:w-1/3 !mt-0">
           <Link href="/forgot-password" className="link">
             Forgot Password?
           </Link>
-          <Link href="/register" className="link">
-            Register
+          <Link href="/sign-up" className="link">
+            Sign Up
           </Link>
         </div>
       </div>
@@ -82,6 +106,7 @@ const Login = () => {
   );
 };
 
-Login.getLayout = getLayout;
+Login.getLayout = (page) => <Container>{page}</Container>;
 
+export { getServerSideProps };
 export default Login;
