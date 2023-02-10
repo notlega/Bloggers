@@ -57,7 +57,7 @@ const DefaultLayout = ({ children }) => {
               </button>
             </div>
             {user ? (
-              <div className="dropdown dropdown-end">
+              <div className="hidden md:inline-block dropdown dropdown-end">
                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                   <div className="w-10 rounded-full">
                     <img src={profilePicture} alt={profilePicture} />
