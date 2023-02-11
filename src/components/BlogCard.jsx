@@ -1,24 +1,52 @@
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 
-const BlogCard = ({ id, subHeader, title, image }) => (
-  <>
-    {subHeader && <h4 className="text-xl font-semibold text-secondary mb-4">{subHeader}</h4>}
-    <Link href={`/blog/${id}`} className="flex flex-row h-20 space-x-4 px-2">
-      {/* TODO: replace with actual image */}
-      <img src="https://placeimg.com/840/480/any" alt={title} className="w-32 object-cover" />
-      <h2 className="text-md font-semibold overflow-x-auto">{title}</h2>
+const propTypes = {
+  blog: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    blog: PropTypes.string.isRequired,
+    created_at: PropTypes.string.isRequired,
+    updated_at: PropTypes.string.isRequired,
+    user_id: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired,
+    avatar: PropTypes.string,
+  }),
+};
+
+// TODO: finish all todos in blogcard component
+
+/**
+ * A card component for a blog
+ *
+ * @type {React.FC<import('prop-types').InferProps<typeof propTypes>>}
+ * @todo make all blogs have the option to have a preview image
+ * @todo use badges next to blog name to show if its new or updated recently based on the dates provided
+ * @todo add category badges to the bottom of the card using card-actions
+ */
+const BlogCard = ({ blog }) => (
+  <div className="card shadow-xl">
+    <Link href={`/profile/${blog.user_id}`} className="card-body flex-row py-6 space-x-2">
+      <picture className="avatar">
+        <div className="rounded-full" />
+      </picture>
+      <div className="card-title text-base">
+        {blog.username}
+      </div>
     </Link>
-    <div className="divider" />
-  </>
+    <Link href={`/blog/${blog.id}`}>
+      <figure>
+        <img src="https://picsum.photos/seed/picsum/536/354" alt="Placeholder" />
+      </figure>
+      <div className="card-body text-left">
+        <h2 className="card-title">{blog.name}</h2>
+        <p>{blog.description}</p>
+      </div>
+    </Link>
+  </div>
 );
 
-BlogCard.propTypes = {
-  id: PropTypes.number.isRequired,
-  subHeader: PropTypes.string,
-  title: PropTypes.string.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  image: PropTypes.object.isRequired,
-};
+BlogCard.propTypes = propTypes;
 
 export default BlogCard;
