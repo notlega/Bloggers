@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import '../styles/globals.css';
 import 'react-loading-skeleton/dist/skeleton.css';
 import DefaultLayout from '../layouts/DefaultLayout';
+import UserProvider from '../providers/UserProvider';
 
 // this is a list of general todos for this project
 // TODO: write jest tests for all components
@@ -34,7 +35,7 @@ const MyApp = ({ Component, pageProps }) => {
       initialSession={pageProps.initialSession}
     >
       <QueryClientProvider client={queryClient}>
-        {getLayout(<Component {...pageProps} />)}
+        <UserProvider>{getLayout(<Component {...pageProps} />)}</UserProvider>
       </QueryClientProvider>
     </SessionContextProvider>
   );
