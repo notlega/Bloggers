@@ -4,7 +4,6 @@ import { MdArrowBack } from 'react-icons/md';
 import { Formik } from 'formik';
 import Link from 'next/link';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
-import Container from '../components/Container';
 
 // TODO: create auth guard when i have time
 // temp fix for auth guard
@@ -37,7 +36,7 @@ const Login = () => {
 
     if (error) {
       // TODO: HANDLE ERROR WHEN I NOT LAZY
-      // TODO: I AM LAZY
+      // I AM LAZY
       console.log('🚀 ~ file: login.jsx:17 ~ loginHandler ~ error', error);
       return;
     }
@@ -48,7 +47,7 @@ const Login = () => {
   // TODO: write validation
 
   return (
-    <div className="hero min-h-screen">
+    <div className="hero min-h-screen !mt-0">
       <div className="hero-content flex-col text-center justify-center space-y-8 w-full">
         <button className="btn btn-ghost absolute top-6 left-4 !m-0" onClick={() => router.back()}>
           <MdArrowBack className="w-8 h-8" />
@@ -64,7 +63,7 @@ const Login = () => {
         >
           {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
             <form
-              className="form-control justify-center space-y-4 w-full md:w-1/3"
+              className="form-control justify-center space-y-4 w-full md:w-1/2"
               onSubmit={handleSubmit}
             >
               <input
@@ -93,7 +92,7 @@ const Login = () => {
             </form>
           )}
         </Formik>
-        <div className="flex flex-row justify-between w-full md:w-1/3 !mt-0">
+        <div className="flex flex-row justify-between w-full md:w-1/2 !mt-0">
           <Link href="/forgot-password" className="link">
             Forgot Password?
           </Link>
@@ -106,7 +105,7 @@ const Login = () => {
   );
 };
 
-Login.getLayout = (page) => <Container>{page}</Container>;
+Login.getLayout = (page) => <div className="px-2 md:px-6 lg:mx-auto lg:max-w-[1080px]">{page}</div>;
 
 export { getServerSideProps };
 export default Login;
