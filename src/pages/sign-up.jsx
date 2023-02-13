@@ -4,7 +4,6 @@ import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import { MdArrowBack } from 'react-icons/md';
 import { Formik } from 'formik';
-import Container from '../components/Container';
 
 // TODO: create auth guard when i have time
 // temp fix for auth guard
@@ -65,7 +64,7 @@ const SignUp = () => {
         >
           {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
             <form
-              className="form-control justify-center space-y-4 w-full md:w-1/3"
+              className="form-control justify-center space-y-4 w-full md:w-1/2"
               onSubmit={handleSubmit}
             >
               <input
@@ -104,10 +103,10 @@ const SignUp = () => {
             </form>
           )}
         </Formik>
-        <Link href="/login" className="text-left link w-full md:w-1/3 !mt-0">
+        <Link href="/login" className="text-left link w-full md:w-1/2 !mt-0">
           Already have an account?
         </Link>
-        <span className="text-left text-2xs w-full md:w-1/3">
+        <span className="text-left text-2xs w-full md:w-1/2">
           By signing up, you agree to literally no Terms and Conditions (not yet at least)
         </span>
       </div>
@@ -115,7 +114,9 @@ const SignUp = () => {
   );
 };
 
-SignUp.getLayout = (page) => <Container>{page}</Container>;
+SignUp.getLayout = (page) => (
+  <div className="px-2 md:px-6 lg:mx-auto lg:max-w-[1080px]">{page}</div>
+);
 
 export { getServerSideProps };
 export default SignUp;

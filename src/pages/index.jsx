@@ -5,9 +5,22 @@ import BlogCard from '../components/BlogCard';
 const getServerSideProps = async (context) => {
   const supabaseClient = createServerSupabaseClient(context);
 
-  const { data: blogs } = await supabaseClient.rpc('get_blogs', {
+  const { data: blogs, error } = await supabaseClient.rpc('get_blogs', {
     blogs_limit: null,
     blogs_offset: null,
+  });
+
+  if (error || !blogs) {
+    return {
+      notFound: true,
+    };
+  }
+
+  blogs.forEach((blog) => {
+    // eslint-disable-next-line no-param-reassign
+    blog.avatar = supabaseClient.storage
+      .from('avatar-image-bucket')
+      .getPublicUrl(blog.avatar || 'default-profile-picture').data.publicUrl;
   });
 
   return {

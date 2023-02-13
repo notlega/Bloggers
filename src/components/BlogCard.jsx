@@ -28,12 +28,10 @@ const propTypes = {
 const BlogCard = ({ blog }) => (
   <div className="card shadow-xl">
     <Link href={`/profile/${blog.user_id}`} className="card-body flex-row py-6 space-x-2">
-      <picture className="avatar">
-        <div className="rounded-full" />
+      <picture className="avatar w-[10%] md:w-[11%] lg:w-[13%]">
+        <img src={blog.avatar} alt={blog.username} className="rounded-full" />
       </picture>
-      <div className="card-title text-base">
-        {blog.username}
-      </div>
+      <div className="card-title text-base">{blog.username}</div>
     </Link>
     <Link href={`/blog/${blog.id}`}>
       <figure>

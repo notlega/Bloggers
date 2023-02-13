@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useUser } from '@supabase/auth-helpers-react';
 import PropTypes from 'prop-types';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
@@ -23,6 +23,8 @@ const getServerSideProps = async (context) => {
   data.avatar = supabaseClient.storage
     .from('avatar-image-bucket')
     .getPublicUrl(data.avatar || 'default-profile-picture').data.publicUrl;
+
+  console.log(data);
 
   return {
     props: {
@@ -51,21 +53,20 @@ const propTypes = {
  */
 const Profile = ({ profileUser }) => {
   const { isLoading: isUserLoading, user: publicUser } = useContext(UserContext);
-  const user = useUser();
 
   return (
     !isUserLoading && (
       <div className="mx-auto max-w-xl mt-6 px-5 space-y-8">
         <div className="flex flex-row items-center space-x-10">
           <picture className="avatar w-[24%]">
-            <img src={publicUser.avatar} alt={publicUser.username} className="rounded-full" />
+            <img src={profileUser.avatar} alt={profileUser.username} className="rounded-full" />
           </picture>
           <div>
-            <h2 className="text-2xl mb-1 md:mb-2">{publicUser.username}</h2>
-            <span>{publicUser.about_me}</span>
+            <h2 className="text-2xl mb-1 md:mb-2">{profileUser.username}</h2>
+            <span>{profileUser.about_me}</span>
           </div>
         </div>
-        {user.id === profileUser.id && <button className="btn w-full">Edit Profile</button>}
+        {publicUser != null && publicUser.id === profileUser.id && <button className="btn w-full">Edit Profile</button>}
       </div>
     )
   );
