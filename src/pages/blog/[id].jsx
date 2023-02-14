@@ -26,8 +26,6 @@ const getServerSideProps = async (context) => {
     .from('avatar-image-bucket')
     .getPublicUrl(blog[0].avatar || 'default-profile-picture').data.publicUrl;
 
-  console.log(blog[0]);
-
   return {
     props: {
       blog: blog[0],

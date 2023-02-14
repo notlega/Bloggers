@@ -1,5 +1,4 @@
-import { useContext, useEffect } from 'react';
-import { useUser } from '@supabase/auth-helpers-react';
+import { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import UserContext from '../../contexts/UserContext';

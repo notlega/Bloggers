@@ -93,9 +93,9 @@ const Login = () => {
           )}
         </Formik>
         <div className="flex flex-row justify-between w-full md:w-1/2 !mt-0">
-          <Link href="/forgot-password" className="link">
+          <button className="link text-gray-400 cursor-not-allowed" disabled>
             Forgot Password?
-          </Link>
+          </button>
           <Link href="/sign-up" className="link">
             Sign Up
           </Link>
