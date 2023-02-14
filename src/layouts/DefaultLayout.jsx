@@ -35,7 +35,7 @@ const DefaultLayout = ({ children }) => {
       return;
     }
 
-    router.push('/');
+    router.reload();
   };
 
   return (
@@ -55,8 +55,13 @@ const DefaultLayout = ({ children }) => {
               </Link>
             )}
             <div className="hidden md:block input-group w-auto">
-              <input type="text" className="input input-bordered w-64" placeholder="Search..." />
-              <button className="btn btn-square">
+              <input
+                type="text"
+                className="input input-bordered w-64"
+                placeholder="Search..."
+                disabled
+              />
+              <button className="btn btn-square" disabled>
                 <IoSearch className="w-fit h-fit" />
               </button>
             </div>
@@ -94,7 +99,7 @@ const DefaultLayout = ({ children }) => {
           </nav>
           <Container>{children}</Container>
           <footer className="p-10 pb-4 bg-neutral text-neutral-content space-y-10">
-            <div className='footer'>
+            <div className="footer">
               <div>
                 <span className="footer-title">Services</span>
                 <Link href="/" className="link link-hover">
@@ -153,8 +158,9 @@ const DefaultLayout = ({ children }) => {
                   id="search-navbar"
                   className="input input-bordered"
                   placeholder="Search..."
+                  disabled
                 />
-                <button className="btn btn-square">
+                <button className="btn btn-square" disabled>
                   <IoSearch className="w-fit h-fit" />
                 </button>
               </div>
