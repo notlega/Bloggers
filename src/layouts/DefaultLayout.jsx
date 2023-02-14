@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useContext } from 'react';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
@@ -8,6 +9,7 @@ import { MdLogin, MdLogout } from 'react-icons/md';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import Container from '../components/Container';
 import UserContext from '../contexts/UserContext';
+import Logo from '../../public/new-logo.png';
 
 const propTypes = {
   children: PropTypes.node,
@@ -44,7 +46,7 @@ const DefaultLayout = ({ children }) => {
           <nav className="navbar w-full sticky top-0 py-2.5 z-20 bg-base-300 space-x-2 justify-between">
             <div className="flex-1">
               <Link href="/" className="btn btn-ghost text-xl normal-case">
-                Bloggers!
+                <Image src={Logo} alt="new-logo.png" width={90} height={90} />
               </Link>
             </div>
             {user && (
