@@ -12,7 +12,9 @@ const propTypes = {
  * @type {React.FC<import('prop-types').InferProps<typeof propTypes>>}
  */
 const Container = ({ classNames, children }) => (
-  <div className={cn(classNames, 'mt-2 mb-8 md:my-6 px-2 md:px-6 lg:mx-auto lg:max-w-[1080px]')}>{children}</div>
+  <div className={cn(classNames, 'mt-2 mb-8 md:my-6 px-2 md:px-6 lg:mx-auto lg:max-w-[1080px]')}>
+    {children}
+  </div>
 );
 
 Container.propTypes = propTypes;

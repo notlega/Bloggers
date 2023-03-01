@@ -65,7 +65,9 @@ const Profile = ({ profileUser }) => {
             <span>{profileUser.about_me}</span>
           </div>
         </div>
-        {publicUser != null && publicUser.id === profileUser.id && <button className="btn w-full">Edit Profile</button>}
+        {publicUser != null && publicUser.id === profileUser.id && (
+          <button className="btn w-full">Edit Profile</button>
+        )}
       </div>
     )
   );

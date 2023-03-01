@@ -4,13 +4,7 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: [
-    'plugin:react/recommended',
-    'plugin:cypress/recommended',
-    'plugin:jest/recommended',
-    'airbnb',
-    'prettier',
-  ],
+  extends: ['plugin:react/recommended', 'plugin:cypress/recommended', 'airbnb', 'prettier'],
   overrides: [],
   parserOptions: {
     ecmaFeatures: {
@@ -19,7 +13,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['react', 'cypress', 'jest'],
+  plugins: ['react', 'cypress'],
   rules: {
     'react/react-in-jsx-scope': 'off',
     'react/require-default-props': 'off',
