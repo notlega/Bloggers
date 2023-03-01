@@ -9,7 +9,6 @@ import DefaultLayout from '../layouts/DefaultLayout';
 import UserProvider from '../providers/UserProvider';
 
 // this is a list of general todos for this project
-// TODO: write jest tests for all components
 // TODO: install cypress and run tests on github actions
 
 const propTypes = {
