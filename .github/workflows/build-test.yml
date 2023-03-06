@@ -41,13 +41,6 @@ jobs:
           if-no-files-found: error
           path: .next
 
-      - name: Save node_modules
-        uses: actions/upload-artifact@v3
-        with:
-          name: node_modules
-          if-no-files-found: error
-          path: node_modules
-
       - name: Save .env.local file
         uses: actions/upload-artifact@v3
         with:
