@@ -17,21 +17,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Cypress install
-        uses: cypress-io/github-action@v5
+      - uses: actions/setup-node@v3
         with:
-          runTests: false
+          node-version: 16
+          cache: 'npm'
 
-      - name: Create .env.local for supabase
-        uses: SpicyPizza/create-envfile@v1.3.0
-        with:
-          envkey_NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          envkey_NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-          envkey_NEXT_PUBLIC_SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
-          directory: ''
-          file_name: .env.local
-          fail_on_empty: true
-
+      - run: npm ci
       - run: npm run build
 
       - name: Save NextJS build folder
@@ -61,19 +52,21 @@ jobs:
         with:
           name: .next
           path: .next
-
-      - name: Download the .env.local file
-        uses: actions/download-artifact@v3
+          
+      - name: Create .env.local for supabase
+        uses: SpicyPizza/create-envfile@v1.3.0
         with:
-          name: .env.local
-          path: .env.local
+          envkey_NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          envkey_NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          envkey_NEXT_PUBLIC_SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          directory: ''
+          file_name: .env.local
+          fail_on_empty: true
 
       - uses: actions/setup-node@v3
         with:
           node-version: 16
           cache: 'npm'
-
-      - run: npm ci
 
       - name: Cypress E2E - Chrome
         run: npm run e2e:headless
