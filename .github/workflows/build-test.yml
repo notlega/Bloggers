@@ -41,6 +41,13 @@ jobs:
           if-no-files-found: error
           path: .next
 
+      - name: Save node_modules
+        uses: actions/upload-artifact@v3
+        with:
+          name: node_modules
+          if-no-files-found: error
+          path: node_modules
+
       - name: Save .env.local file
         uses: actions/upload-artifact@v3
         with:
@@ -62,11 +69,17 @@ jobs:
           name: .next
           path: .next
 
+      - name: Download node_modules
+        uses: actions/download-artifact@v3
+        with:
+          name: node_modules
+          path: node_modules
+
       - name: Download the .env.local file
         uses: actions/download-artifact@v3
         with:
           name: .env.local
-          path: .
+          path: .env.local
 
       - name: Cypress E2E - Chrome
         run: npm run e2e:headless
