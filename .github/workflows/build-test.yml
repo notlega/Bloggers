@@ -32,13 +32,6 @@ jobs:
           if-no-files-found: error
           path: .next
 
-      - name: Save .env.local file
-        uses: actions/upload-artifact@v3
-        with:
-          name: .env.local
-          if-no-files-found: error
-          path: .env.local
-
   cypress-chrome-e2e:
     timeout-minutes: 15
     runs-on: ubuntu-latest
