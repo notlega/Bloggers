@@ -32,6 +32,8 @@ jobs:
           file_name: .env.local
           fail_on_empty: true
 
+      - run: npm run build
+
       - name: Save NextJS build folder
         uses: actions/upload-artifact@v3
         with:
