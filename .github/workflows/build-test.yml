@@ -71,6 +71,8 @@ jobs:
           node-version: 16
           cache: 'npm'
 
+      - run: npm ci
+
       - name: Cypress E2E - Chrome
         run: npm run e2e:headless
 
