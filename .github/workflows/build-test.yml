@@ -22,6 +22,16 @@ jobs:
           node-version: 16
           cache: 'npm'
 
+      - name: Create .env.local for supabase
+        uses: SpicyPizza/create-envfile@v1.3.0
+        with:
+          envkey_NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          envkey_NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          envkey_NEXT_PUBLIC_SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          directory: ''
+          file_name: .env.local
+          fail_on_empty: true
+
       - run: npm ci
       - run: npm run build
 
