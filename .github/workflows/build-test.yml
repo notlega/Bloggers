@@ -76,9 +76,6 @@ jobs:
       - name: Cypress E2E - Chrome
         run: npm run e2e:headless
 
-      - run: cd cypress
-      - run: mkdir coverage
-      - run: cd coverage
       - run: npx nyc report > detailed.txt
       - run: npx nyc report --reporter=text-summary > summary.txt
 
