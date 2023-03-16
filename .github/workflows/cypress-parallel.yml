@@ -45,7 +45,7 @@ jobs:
 
       - name: Parse test files for parallelization
         id: parse
-        uses: tgamauf/cypress-parallel@v2.0.0
+        uses: "tgamauf/cypress-parallel@cypress-parallel 2.0.0"
 
   e2e-tests:
     timeout-minutes: 15
