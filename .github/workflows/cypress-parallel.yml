@@ -48,6 +48,7 @@ jobs:
         uses: tgamauf/cypress-parallel@2.0.0
 
   e2e-tests:
+    if: ${{ fromJson(needs.prepare.outputs.e2e-tests) != '[]' && fromJson(needs.prepare.outputs.e2e-tests) != '' }}
     timeout-minutes: 15
     runs-on: ubuntu-latest
     needs: prepare
@@ -80,3 +81,19 @@ jobs:
         with:
           install: false
           spec: ${{ matrix.spec }}
+          browser: 'chrome'
+          start: npm run dev
+          wait-on: 'http://localhost:3001'
+          command: cypress run --e2e
+
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: cypress-videos
+          path: cypress/videos
