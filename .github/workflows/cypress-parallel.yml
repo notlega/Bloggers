@@ -1,0 +1,117 @@
+name: 'Cypress E2E and Component Testing'
+
+# Skip job run if PR updated
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: ['main', 'develop']
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      e2e-tests: ${{ steps.parse.outputs.e2e-tests }}
+      component-tests: ${{ steps.parse.outputs.component-tests }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Create .env.local for supabase
+        uses: SpicyPizza/create-envfile@v1.3.0
+        with:
+          envkey_NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          envkey_NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          envkey_NEXT_PUBLIC_SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          directory: ''
+          file_name: .env.local
+          fail_on_empty: true
+
+      - name: Build
+        uses: cypress-io/github-action@v5
+        with:
+          runTests: false
+          build: npm run build
+
+      - name: Save NextJS build folder
+        uses: actions/upload-artifact@v3
+        with:
+          name: .next
+          if-no-files-found: error
+          path: .next
+          retention-days: 2
+
+      - name: Parse test files for parallelization
+        id: parse
+        uses: tgamauf/cypress-parallel@v2
+
+  e2e-tests:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    needs: prepare
+    strategy:
+      fail-fast: false
+      matrix:
+        spec: ${{ fromJson(needs.prepare.outputs.e2e-tests) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Download NextJS build folder
+        uses: actions/download-artifact@v3
+        with:
+          name: .next
+          path: .next
+
+      - name: Create .env.local for supabase
+        uses: SpicyPizza/create-envfile@v1.3.0
+        with:
+          envkey_NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          envkey_NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          envkey_NEXT_PUBLIC_SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          directory: ''
+          file_name: .env.local
+          fail_on_empty: true
+
+      - name: Run e2e tests
+        uses: cypress-io/github-action@v5
+        with:
+          install: false
+          spec: ${{ matrix.spec }}
+
+  component-tests:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    needs: prepare
+    strategy:
+      fail-fast: false
+      matrix:
+        spec: ${{ fromJson(needs.prepare.outputs.component-tests) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Download NextJS build folder
+        uses: actions/download-artifact@v3
+        with:
+          name: .next
+          path: .next
+
+      - name: Create .env.local for supabase
+        uses: SpicyPizza/create-envfile@v1.3.0
+        with:
+          envkey_NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          envkey_NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          envkey_NEXT_PUBLIC_SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          directory: ''
+          file_name: .env.local
+          fail_on_empty: true
+
+      - name: Run component tests
+        uses: cypress-io/github-action@v5
+        with:
+          install: false
+          spec: ${{ matrix.spec }}
