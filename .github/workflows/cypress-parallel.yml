@@ -19,30 +19,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Create .env.local for supabase
-        uses: SpicyPizza/create-envfile@v1.3.0
-        with:
-          envkey_NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          envkey_NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-          envkey_NEXT_PUBLIC_SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
-          directory: ''
-          file_name: .env.local
-          fail_on_empty: true
-
-      - name: Build
-        uses: cypress-io/github-action@v5
-        with:
-          runTests: false
-          build: npm run build
-
-      - name: Save NextJS build folder
-        uses: actions/upload-artifact@v3
-        with:
-          name: .next
-          if-no-files-found: error
-          path: .next
-          retention-days: 2
-
       - name: Parse test files for parallelization
         id: parse
         uses: tgamauf/cypress-parallel@2.0.0
@@ -60,12 +36,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Download NextJS build folder
-        uses: actions/download-artifact@v3
-        with:
-          name: .next
-          path: .next
-
       - name: Create .env.local for supabase
         uses: SpicyPizza/create-envfile@v1.3.0
         with:
@@ -81,9 +51,7 @@ jobs:
         with:
           spec: ${{ matrix.spec }}
           browser: 'chrome'
-          start: npm run start
-          wait-on: 'http://localhost:3000'
-          command: cypress run --e2e
+          command: npm run e2e:headless
 
       - uses: actions/upload-artifact@v3
         if: failure()
