@@ -82,7 +82,7 @@ jobs:
           spec: ${{ matrix.spec }}
           browser: 'chrome'
           start: npm run start
-          wait-on: 'http://localhost:3001'
+          wait-on: 'http://localhost:3000'
           command: cypress run --e2e
 
       - uses: actions/upload-artifact@v3
