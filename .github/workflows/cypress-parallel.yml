@@ -15,7 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       e2e-tests: ${{ steps.parse.outputs.e2e-tests }}
-      component-tests: ${{ steps.parse.outputs.component-tests }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -77,40 +76,6 @@ jobs:
           fail_on_empty: true
 
       - name: Run e2e tests
-        uses: cypress-io/github-action@v5
-        with:
-          install: false
-          spec: ${{ matrix.spec }}
-
-  component-tests:
-    timeout-minutes: 15
-    runs-on: ubuntu-latest
-    needs: prepare
-    strategy:
-      fail-fast: false
-      matrix:
-        spec: ${{ fromJson(needs.prepare.outputs.component-tests) }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Download NextJS build folder
-        uses: actions/download-artifact@v3
-        with:
-          name: .next
-          path: .next
-
-      - name: Create .env.local for supabase
-        uses: SpicyPizza/create-envfile@v1.3.0
-        with:
-          envkey_NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          envkey_NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-          envkey_NEXT_PUBLIC_SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
-          directory: ''
-          file_name: .env.local
-          fail_on_empty: true
-
-      - name: Run component tests
         uses: cypress-io/github-action@v5
         with:
           install: false
