@@ -69,3 +69,37 @@ jobs:
         with:
           name: cypress-videos
           path: cypress/videos
+
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: cypress-coverage
+          path: coverage
+
+  preview-deploy:
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: ubuntu-latest
+    needs: ['prepare', 'e2e-tests']
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Installs cypress-coverage
+        uses: actions/download-artifact@v3
+        with:
+          name: cypress-coverage
+          path: coverage
+
+      - name: Deploy branch coverage to Netlify as preview
+        uses: jsmrcaga/action-netlify-deploy@v2.0.0
+        with:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          build_directory: coverage/lcov-report
+
+      - name: Status check
+        uses: Sibz/github-status-action@v1.1.6
+        with:
+          authToken: ${{ secrets.GITHUB_TOKEN }}
+          context: Netlify preview
+          state: success
+          target_url: ${{ env.NETLIFY_PREVIEW_URL }}
