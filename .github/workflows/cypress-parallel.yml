@@ -19,8 +19,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install cypress
-        run: npm i -D cypress
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - run: npm i -D cypress
 
       - name: Parse test files for parallelization
         id: parse
