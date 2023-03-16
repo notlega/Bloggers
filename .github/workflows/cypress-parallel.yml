@@ -23,7 +23,15 @@ jobs:
         with:
           node-version: 16
 
-      - run: npm i -D cypress
+      - run: npm ci
+
+      - name: Save node_modules
+        uses: actions/upload-artifact@v3
+        with:
+          name: node_modules
+          if-no-files-found: error
+          path: node_modules
+          retention-days: 1
 
       - name: Parse test files for parallelization
         id: parse
@@ -42,6 +50,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Download node_modules
+        uses: actions/download-artifact@v3
+        with:
+          name: node_modules
+          path: node_modules
+
       - name: Create .env.local for supabase
         uses: SpicyPizza/create-envfile@v1.3.0
         with:
@@ -55,6 +69,7 @@ jobs:
       - name: Run e2e tests
         uses: cypress-io/github-action@v5
         with:
+          install: false
           spec: ${{ matrix.spec }}
           browser: 'chrome'
           command: npm run e2e:headless
