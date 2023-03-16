@@ -95,6 +95,8 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           build_directory: coverage/lcov-report
+          install_command: "echo Skipping installing the dependencies"
+          build_command: "echo Skipping building the web files"
 
       - name: Status check
         uses: Sibz/github-status-action@v1.1.6
