@@ -79,10 +79,9 @@ jobs:
       - name: Run e2e tests
         uses: cypress-io/github-action@v5
         with:
-          install: false
           spec: ${{ matrix.spec }}
           browser: 'chrome'
-          start: npm run dev
+          start: npm run start
           wait-on: 'http://localhost:3001'
           command: cypress run --e2e
 
