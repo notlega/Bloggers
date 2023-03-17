@@ -1,34 +1,86 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Bloggers
 
-## Getting Started
+This is a blog made using NextJS
 
-First, run the development server:
+## Table of Contents
+
+- [Installation](#installation)
+- [Code Coverage](#code-coverage)
+
+## Installation
+
+1. Clone the repository
 
 ```bash
-npm run dev
-# or
-yarn dev
+git clone git@github.com:notlega/express-jest-ci.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+```bash
+npm ci
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/[id].js`.
+3. Build the project
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```bash
+npm run build
+```
 
-## Learn More
+4. Run the tests
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run e2e:headless
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+5. View cypress coverage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```
+npm run coverage
+```
 
-## Deploy on Vercel
+## Code Coverage
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Code coverage is basically the same as test coverage, the percentage of code that has been covered by tests
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+I have setup a way for developers to view their code coverage at the end of the GitHub Actions workflow
+
+```yml
+preview-deploy:
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: ubuntu-latest
+    needs: ['prepare', 'e2e-tests']
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Installs cypress-coverage
+        uses: actions/download-artifact@v3
+        with:
+          name: cypress-coverage
+          path: coverage
+
+      - name: Deploy branch coverage to Netlify as preview
+        uses: jsmrcaga/action-netlify-deploy@v2.0.0
+        with:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          build_directory: coverage/lcov-report
+          install_command: "echo Skipping installing the dependencies"
+          build_command: "echo Skipping building the web files"
+
+      - name: Status check
+        uses: Sibz/github-status-action@v1.1.6
+        with:
+          authToken: ${{ secrets.GITHUB_TOKEN }}
+          context: Netlify preview
+          state: success
+          target_url: ${{ env.NETLIFY_PREVIEW_URL }}
+```
+
+This uses Netlify's production and preview deployments to deploy the static website containing the code coverage
+
+When a pull request is made, the branch will be tested and the code coverage will be deployed to a preview deployment
+
+When the pull request is merged, the code coverage will be deployed to the production deployment
+
+This will allow developers to view the coverage within the develop and main branches at all time

@@ -12,6 +12,7 @@
     "e2e:headless": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e\"",
     "component": "cypress open --component",
     "component:headless": "cypress run --component",
+    "coverage": "http-server coverage/lcov-report",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\""
   },
   "dependencies": {
@@ -50,6 +51,7 @@
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "http-server": "^14.1.1",
     "prettier": "^2.7.1",
     "start-server-and-test": "^2.0.0"
   }
